@@ -1,22 +1,52 @@
-const todos = ['Kiss my wife', 'Finish this course', 'Walk the dog', 'Install my pipe', 'Watch my show'];
+// Challenge
+const todos = [
+    {text: 'Kiss my wife', 
+    completed: false},
+    {text: 'Finish this course', 
+    completed: false},
+    {text: 'Go to Japan', 
+    completed: true},
+    {text: 'Install my pipe', 
+    completed: false},
+    {text: 'Play Boarderlands', 
+    completed: false},
+]
+const deleteTodo = function (todos, todoText){
+    const index =  todos.findIndex(function(todo){
+        return todo.text.toLowerCase() === todoText.toLowerCase();
+    })
+    if (index > -1) {
+        todos.splice(index, 1);
+    } else {
+        console.log('Todo not found!');
+    }
+    
+}
 
-console.log(`You have ${todos.length} todos.`);
-
-// // console.log(`Todo: ${todos[0]}`);
-// // console.log(`Todo: ${todos[todos.length - 2]}`);
+// deleteTodo(todos, 'install my pipe');
 // console.log(todos);
 
-// // Delete the 3rd item
-// // Add a new item onto the end
-// //Remove the first item from the list
+// return todos with a completed value of false
+const getThingsToDo = function (todos){
+    return todos.filter(function(todo){
+        return !todo.completed;
+    })
+}
 
-// console.log(todos.splice(2, 1));
-// console.log(todos.push('Adding new item to end'));
-// console.log(todos.shift());
-// console.log(todos);
-// 1. item
-// 2. item
+const sortTodos = function(todos){
+    return todos.sort(function(a,b){
+        if (a.completed > b.completed){
+            return 1;
+        } else if (b.completed > a.completed) {
+            return -1;
+        } else {
+            return 0;
+        }
+    })
+}
 
-todos.forEach(function(item, index){
-    console.log(`${index + 1}. ${item}`);
-})
+sortTodos(todos);
+console.log(todos);
+
+//console.log(getThingsToDo(todos));
+
