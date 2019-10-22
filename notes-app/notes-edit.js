@@ -3,9 +3,7 @@ const timeElement = document.querySelector('#time-stamp');
 const bodyElement = document.querySelector('#note-body');
 const noteId = location.hash.substr(1);
 let notes = getSavedNotes();
-let note = notes.find(function (note) {
-    return note.id === noteId
-});
+let note = notes.find( (note) => note.id === noteId);
 
 if (note === undefined){
     location.assign('./index.html');
@@ -16,32 +14,30 @@ timeElement.textContent = generateLastEdited(note.updatedAt);
 titleElement.value = note.title;
 bodyElement.value = note.body;
 
-titleElement.addEventListener('input', function() {
+titleElement.addEventListener('input', () => {
     note.title = titleElement.value;
     note.updatedAt = moment().valueOf();
     timeElement.textContent = generateLastEdited(note.updatedAt);
     saveNotes(notes);
 })
 
-bodyElement.addEventListener('input', function() {
+bodyElement.addEventListener('input', () => {
     note.body = bodyElement.value;
     note.updatedAt = moment().valueOf();
     timeElement.textContent = generateLastEdited(note.updatedAt);
     saveNotes(notes);
 })
 
-document.querySelector('#remove-note').addEventListener('click', function(){
+document.querySelector('#remove-note').addEventListener('click', () =>{
     removeNote(note.id);
     saveNotes(notes);
     location.assign('./index.html');
 })
 
-window.addEventListener('storage', function(e){
+window.addEventListener('storage', (e) =>{
     if (e.key === 'notes'){
         notes = JSON.parse(e.newValue);
-        note = notes.find(function (note) {
-            return note.id === noteId;
-        });
+        note = notes.find( (note) => note.id === noteId);
         
         if (note === undefined){
             location.assign('./index.html');
