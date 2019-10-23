@@ -2,6 +2,7 @@
 // 15/20 -> You got a C (75%)!
 
 let grade = function (scoreReceived, totalPossible){
+    if (typeof scoreReceived === 'number' && typeof totalPossible === 'number'){
     let gradeReceived = scoreReceived / totalPossible*100;
     let gradeLetter;
 
@@ -17,13 +18,24 @@ let grade = function (scoreReceived, totalPossible){
         gradeLetter = 'F';
     }
 
-    return `You got a ${gradeLetter} (${gradeReceived})!`
+    return `You got a ${gradeLetter} (${gradeReceived})!`;
+
+    } else {
+    throw Error('Please provide numbers only');
+    }
 }
 
-let student1 = grade(15, 20);
-let student2 = grade(14, 20);
-let student3 = grade(20, 20);
+try {
+    let student1 = grade(15, 20);
+    let student2 = grade(14, 20);
+    let student3 = grade(20, 20);
 
-console.log(student1);
-console.log(student2);
-console.log(student3);
+    console.log(student1);
+    console.log(student2);
+    console.log(student3);
+} catch (e){
+    console.log(e.message);
+}
+
+
+

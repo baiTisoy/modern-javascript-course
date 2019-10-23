@@ -6,6 +6,7 @@ const filters = {
 };
 
 renderNotes(notes, filters);
+'use strict'
 
 document.querySelector('#create-note').addEventListener('click', () => {
     const id = uuidv4();
