@@ -5,7 +5,7 @@ const getSavedTodos = () => {
     const todosJSON = localStorage.getItem('todos');
     
     try{
-        return notesJSON ? JSON.parse(todosJSON) : [];
+        return todosJSON ? JSON.parse(todosJSON) : [];
     } catch (e){
         return [];
     } 
@@ -29,44 +29,55 @@ const removeTodo = (id) => {
 const generateTodoDOM = (todos) => {
     todos.forEach( (todo) => {
 
-        //create a parent element for the Todo item
-        const todoElement = document.createElement('div');
-
-        //create the checkbox element for the Todo
+        const todoElement = document.createElement('label');
+        const containerEl = document.createElement('div')
         const checkbox = document.createElement('input');
+        const removeButton = document.createElement('button');
+        const todoText = document.createElement('span');
+
+        // Setup container
+        containerEl.classList.add('list-item__container')
+        todoElement.classList.add('list-item')
+        todoElement.appendChild(containerEl)
+
+
+        //create checkbox
         checkbox.setAttribute('type', 'checkbox');
         checkbox.checked = todo.completed;
+        containerEl.appendChild(checkbox);
         checkbox.addEventListener('change', (e) => {
             todo.completed = e.target.checked;
             saveTodos(todos);
             renderTodos(todos, filters);
         })
-        
-        todoElement.appendChild(checkbox);
 
-        //create text element for the Todo
-        const todoText = document.createElement('span');
+        // Create text element for the Todo
         todoText.textContent = todo.text;
-        todoElement.appendChild(todoText);
+        containerEl.appendChild(todoText);
 
-        const removeButton = document.createElement('button');
-        removeButton.textContent = 'x';
+        // Create remove button
+        removeButton.textContent = 'remove';
+        removeButton.classList.add('button', 'button--text')
+        todoElement.appendChild(removeButton);
         removeButton.addEventListener('click', () =>{
             todos = removeTodo(todo.id);
             saveTodos(todos);
             renderTodos(todos, filters);
         })
-        todoElement.appendChild(removeButton);
-
+        
         document.querySelector('#todos').appendChild(todoElement);
     })
-
 }
 
 const getSummaryDOM = (todos) => {
     const summary = document.createElement('h2');
     const completedTodos = todos.filter( (todo) => !todo.completed);
+    summary.classList.add('list-title')
+    if (completedTodos.length > 1){
     summary.textContent = `You have ${completedTodos.length} todos left`;
+    } else {
+    summary.textContent = `You have ${completedTodos.length} todo left`;
+    }
     document.querySelector('#todos').appendChild(summary);
 }
 

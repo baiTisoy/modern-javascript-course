@@ -10,8 +10,14 @@ window.addEventListener('keypress', (e) => {
 })
 
 const render = () => {
-    puzzleDIV.textContent = game1.puzzle;
+    puzzleDIV.innerHTML = ''
     remainingDIV.textContent = game1.statusMessage;
+
+    game1.puzzle.split('').forEach((letter) => {
+        const letterEl = document.createElement('span')
+        letterEl.textContent = letter
+        puzzleDIV.appendChild(letterEl)
+    })
 }
 
 const startGame = async () => {
